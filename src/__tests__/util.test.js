@@ -1,6 +1,4 @@
-const {
-  getId
-} = require('../util')
+const { getId } = require('../util')
 
 describe("ID parsing", () => {
   it("parses ID from URL", () => {
