@@ -1,5 +1,6 @@
 const axios = require('axios').default
-const Block = require('./page')
+const Page = require('./page')
+const Collection = require('./collection')
 
 const defaultOptions = {
   "limit": 100000,
@@ -72,10 +73,12 @@ class RequestClient {
       id: blockId,
       table: blockType
     })
-      .then(response => {
+      .then(([block]) => {
         switch(blockType){
           case "collection":
+            return new Collection(this, block)
           default:
+            console.log(`${blockId} ${blockType}`)
             return null
         }
       })
