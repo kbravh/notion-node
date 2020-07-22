@@ -25,4 +25,10 @@ const getId = identifier => {
   return uuid
 }
 
-exports.getId = getId
+/* Markdown Utils */
+const plaintextToNotion = text => [[text]]
+
+module.exports = {
+  getId,
+  plaintextToNotion
+}

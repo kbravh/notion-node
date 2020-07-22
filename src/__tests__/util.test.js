@@ -1,4 +1,4 @@
-const { getId } = require('../util')
+const { getId, plaintextToNotion } = require('../util')
 
 describe("ID parsing", () => {
   it("parses ID from URL", () => {
@@ -15,5 +15,11 @@ describe("ID parsing", () => {
   })
   it('rejects an ID with a bad version number', () => {
     expect(() => getId(`251aa556-7b6a-69ef-b08f-67e2d5fb3c0c`)).toThrow(`A valid UUID or Notion URL was not provided.`)
+  })
+})
+
+describe("Markdown Utils", () => {
+  it("transforms plaintext to Notion format", () => {
+    expect(plaintextToNotion("Text")).toStrictEqual([["Text"]])
   })
 })
