@@ -1,4 +1,4 @@
-const { getId, plaintextToNotion } = require('../util')
+const { getId, plaintextToNotion, notionToPlaintext, notionToMarkdown } = require('../util')
 
 describe("ID parsing", () => {
   it("parses ID from URL", () => {
@@ -21,5 +21,11 @@ describe("ID parsing", () => {
 describe("Markdown Utils", () => {
   it("transforms plaintext to Notion format", () => {
     expect(plaintextToNotion("Text")).toStrictEqual([["Text"]])
+  })
+  it("transforms notion format to plaintext", () => {
+    expect(notionToPlaintext([["italics ", [["i"]]], ["bold", [["b"]]]])).toBe("italics bold")
+  })
+  it("transforms notion format to markdown", () => {
+    expect(notionToMarkdown([["bold italics in a codebox",[["b"],["i"],["c"]]]])).toBe('`***bold italics in a codebox***`')
   })
 })

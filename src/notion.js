@@ -15,6 +15,11 @@ class Notion {
     const parsedId = getId(id)
     return this.requestClient.getPage(parsedId)
   }
+
+  getBlock(id) {
+    const parsedId = getId(id)
+    return this.requestClient.getBlock(parsedId, 'block')
+  }
 }
 
 module.exports = Notion

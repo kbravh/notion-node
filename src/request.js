@@ -1,4 +1,5 @@
 const axios = require('axios').default
+const Block = require('./block')
 const Page = require('./page')
 const Collection = require('./collection')
 
@@ -77,8 +78,9 @@ class RequestClient {
         switch(blockType){
           case "collection":
             return new Collection(this, block)
+          case "block":
+            return new Block(this, block)
           default:
-            console.log(`${blockId} ${blockType}`)
             return null
         }
       })
