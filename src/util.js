@@ -32,24 +32,25 @@ const notionToPlaintext = notionArray => notionArray.map(([text]) => text).join(
 
 const notionToMarkdown = notionArray => notionArray.map(([text, modifiers]) => {
   let markdown = text
-  console.log(`${markdown} with ${modifiers}`)
-  for (const [modifier] of modifiers) {
-    switch (modifier) {
-      case "b":
-        markdown = `**${markdown}**`
-        break
-      case "i":
-        markdown = `*${markdown}*`
-        break
-      case "c":
-        markdown = `\`${markdown}\``
-        break
-      case "s":
-        markdown = `~${markdown}~`
-        break
-      case "a":
-      default:
-        break
+  if (modifiers){
+    for (const [modifier] of modifiers) {
+      switch (modifier) {
+        case "b":
+          markdown = `**${markdown}**`
+          break
+        case "i":
+          markdown = `*${markdown}*`
+          break
+        case "c":
+          markdown = `\`${markdown}\``
+          break
+        case "s":
+          markdown = `~${markdown}~`
+          break
+        case "a":
+        default:
+          break
+      }
     }
   }
   return markdown

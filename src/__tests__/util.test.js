@@ -22,10 +22,16 @@ describe("Markdown Utils", () => {
   it("transforms plaintext to Notion format", () => {
     expect(plaintextToNotion("Text")).toStrictEqual([["Text"]])
   })
-  it("transforms notion format to plaintext", () => {
+  it("transforms notion format to plaintext with modifiers", () => {
     expect(notionToPlaintext([["italics ", [["i"]]], ["bold", [["b"]]]])).toBe("italics bold")
   })
-  it("transforms notion format to markdown", () => {
+  it("transforms notion format to plaintext without modifiers", () => {
+    expect(notionToPlaintext([["italics "], ["bold"]])).toBe("italics bold")
+  })
+  it("transforms notion format to markdown with modifiers", () => {
     expect(notionToMarkdown([["bold italics in a codebox",[["b"],["i"],["c"]]]])).toBe('`***bold italics in a codebox***`')
+  })
+  it("transforms notion format to markdown without modifiers", () => {
+    expect(notionToMarkdown([["bold italics in a codebox"]])).toBe('bold italics in a codebox')
   })
 })
