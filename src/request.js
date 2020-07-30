@@ -1,5 +1,5 @@
 const axios = require('axios').default
-const Block = require('./block')
+const { Block, subBlocks } = require('./block')
 const Page = require('./page')
 const Collection = require('./collection')
 
@@ -75,12 +75,80 @@ class RequestClient {
       table: blockType
     })
       .then(([block]) => {
-        switch(blockType){
+        switch (block?.value?.type || blockType) {
+          case "block":
+            console.log(JSON.stringify(block, null, 2))
+            return new Block(this, block)
+          case "abstract":
+            return new subBlocks.AbstractBlock(this, block)
+          case "audio":
+            return new subBlocks.AudioBlock(this, block)
+          case "bookmark":
+            return new subBlocks.BookmarkBlock(this, block)
+          case "breadcrumb":
+            return new subBlocks.BreadcrumbBlock(this, block)
+          case "bulleted_list":
+            return new subBlocks.BulletedListBlock(this, block)
+          case "callout":
+            return new subBlocks.CalloutBlock(this, block)
+          case "code":
+            return new subBlocks.CodeBlock(this, block)
+          case "codepen":
+            return new subBlocks.CodepenBlock(this, block)
           case "collection":
             return new Collection(this, block)
-          case "block":
-            return new Block(this, block)
+          case "column_list":
+            return new subBlocks.ColumnListBlock(this, block)
+          case "drive":
+            return new subBlocks.DriveBlock(this, block)
+          case "embed":
+            return new subBlocks.EmbedBlock(this, block)
+          case "equation":
+            return new subBlocks.EquationBlock(this, block)
+          case "factory":
+            return new subBlocks.FactoryBlock(this, block)
+          case "figma":
+            return new subBlocks.FigmaBlock(this, block)
+          case "file":
+            return new subBlocks.FileBlock(this, block)
+          case "gist":
+            return new subBlocks.GistBlock(this, block)
+          case "header":
+            return new subBlocks.HeaderBlock(this, block)
+          case "image":
+            return new subBlocks.ImageBlock(this, block)
+          case "invision":
+            return new subBlocks.InvisionBlock(this, block)
+          case "miro":
+            return new subBlocks.MiroBlock(this, block)
+          case "numbered_list":
+            return new subBlocks.NumberedListBlock(this, block)
+          case "pdf":
+            return new subBlocks.PDFBlock(this, block)
+          case "sub_header":
+            return new subBlocks.SubHeaderBlock(this, block)
+          case "sub_sub_header":
+            return new subBlocks.SubSubHeaderBlock(this, block)
+          case "table_of_contents":
+            return new subBlocks.TOCBlock(this, block)
+          case "text":
+            return new subBlocks.TextBlock(this, block)
+          case "to_do":
+            return new subBlocks.TodoBlock(this, block)
+          case "toggle":
+            return new subBlocks.ToggleBlock(this, block)
+          case "tweet":
+            return new subBlocks.TweetBlock(this, block)
+          case "typeform":
+            return new subBlocks.TypeformBlock(this, block)
+          case "quote":
+            return new subBlocks.QuoteBlock(this, block)
+          case "video":
+            return new subBlocks.VideoBlock(this, block)
+          case "whimsical":
+            return new subBlocks.WhimsicalBlock(this, block)
           default:
+            console.log(JSON.stringify(block, null, 2))
             return null
         }
       })
