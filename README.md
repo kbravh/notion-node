@@ -46,10 +46,27 @@ Or if you want to add the token to an already created client:
 notion.setToken("<notion-token>")
 ```
 
+You can grab the raw data directly from a Page to pass to a library such as [`react-notion`](https://github.com/splitbee/react-notion).
+**Nota bene**: Making requests with this library from the browser will throw CORS errors, but this could be used for fetching data for SSR.
+
+```js
+let page = await notion.getPage('https://www.notion.so/What-s-New-157765353f2c4705bd45474e5ba8b46c')
+
+let pageData = page.getRawData()
+```
+
 Individual blocks can be queried using their permalink or their Notion ID.
 
 ```js
 notion.getBlock("<block-id>")
+```
+
+Every block will provide its type via the `getType()` method, and each block type will have different helper methods to retrieve block-specific data.
+
+```js
+let block = await notion.getBlock("<block-id>")
+console.log(block.getType()) // text
+console.log(block.getText()) // the text content of the block
 ```
 
 ## Running the tests
