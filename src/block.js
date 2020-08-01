@@ -195,7 +195,7 @@ class FactoryBlock extends Block {
   /**
    * Returns the text command of the template button
    */
-  getText(){return this.block.value?.properties?.[0]?.[0]}
+  getText() { return this.block.value?.properties?.[0]?.[0] }
 }
 
 class FigmaBlock extends BasicMediaBlock {
@@ -261,7 +261,7 @@ class InvisionBlock extends BasicMediaBlock {
 }
 
 class MiroBlock extends BasicMediaBlock {
-  constructor(requestClient, block){
+  constructor(requestClient, block) {
     super(requestClient, block)
   }
 }
@@ -297,7 +297,7 @@ class SubSubHeaderBlock extends BasicTextBlock {
 }
 
 class TOCBlock extends Block {
-  constructor(requestClient, block){
+  constructor(requestClient, block) {
     super(requestClient, block)
   }
 }
@@ -313,17 +313,23 @@ class TodoBlock extends BasicTextBlock {
     super(requestClient, block)
   }
 
+  // /**
+  //  * Returns the state of the checkbox. 
+  //  * TODO - If true or false is passed, sets the checkbox.
+  //  * @param {boolean} checked - If set to true or false, sets the checkbox.
+  //  */
+  // isChecked(checked) {
+  //   if (typeof checked === "boolean") {
+  //     // update checked to Yes or No
+  //   }
+  //   else return this.block?.value?.properties?.checked?.[0]?.[0] == "Yes"
+  // }
+
   /**
    * Returns the state of the checkbox. 
-   * TODO - If true or false is passed, sets the checkbox.
    * @param {boolean} checked - If set to true or false, sets the checkbox.
    */
-  isChecked(checked) {
-    if (typeof checked === "boolean") {
-      // update checked to Yes or No
-    }
-    else return this.block?.value?.properties?.checked?.[0]?.[0] == "Yes"
-  }
+  isChecked(checked) { return this.block?.value?.properties?.checked?.[0]?.[0] == "Yes" }
 }
 
 class ToggleBlock extends BasicTextBlock {
