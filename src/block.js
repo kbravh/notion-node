@@ -43,6 +43,17 @@ class BasicMediaBlock extends Block {
   getFormat() { return this.block.value?.format }
 }
 
+class ContainerBlock extends Block{
+  constructor(requestClient, block){
+    super(requestClient, block)
+  }
+
+  /**
+   * Returns the set of Blocks that this block contains.
+   */
+  getContent(){return this.requestClient.getBlocks(this.block.value?.content)}
+}
+
 class AbstractBlock extends BasicMediaBlock {
   constructor(requestClient, block) {
     super(requestClient, block)
@@ -126,13 +137,18 @@ class CodepenBlock extends BasicMediaBlock {
   }
 }
 
-// class ColumnBlock {
-//   constructor(requestClient, block) {
-//     super(requestClient, block)
-//   }
-// }
+class ColumnBlock extends ContainerBlock {
+  constructor(requestClient, block) {
+    super(requestClient, block)
+  }
 
-class ColumnListBlock extends Block {
+  /**
+   * Returns the layout ratio for column. 
+   */
+  getRatio(){return this.block.value?.format?.column_ratio}
+}
+
+class ColumnListBlock extends ContainerBlock {
   constructor(requestClient, block) {
     super(requestClient, block)
   }
@@ -336,8 +352,11 @@ class ToggleBlock extends BasicTextBlock {
   constructor(requestClient, block) {
     super(requestClient, block)
   }
-  // TODO - call out to requestClient.getBlocks and return the block objects
-  getContents() { return this.block.value?.content }
+
+  /**
+   * Returns the set of Blocks that this block contains.
+   */
+  getContents(){return this.requestClient.getBlocks(this.block.value?.content)}
 }
 
 class TweetBlock extends Block {
@@ -378,7 +397,7 @@ const subBlocks = {
   CalloutBlock,
   CodeBlock,
   CodepenBlock,
-  // ColumnBlock,
+  ColumnBlock,
   ColumnListBlock,
   DividerBlock,
   DriveBlock,
