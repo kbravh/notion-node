@@ -38,6 +38,11 @@ class Notion {
     return this.requestClient.getBlock(parsedId, 'block')
   }
 
+  /**
+   * Returns an array of Block objects or one of its sub-blocks that
+   * represents each Notion ID passed in.
+   * @param {[string]} ids - An array of Notion block IDs or URLs
+   */
   getBlocks(ids) {
     if(!Array.isArray(ids)){
       throw `You must pass in an array of IDs or URLs`
