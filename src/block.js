@@ -6,8 +6,19 @@ class Block {
     this.block = block
   }
 
+  /**
+   * Returns the raw Notion data that makes up this Block.
+   */
   getData() { return this.block }
+
+  /**
+   * Returns the Notion ID of this Block.
+   */
   getId() { return this.block.value.id }
+
+  /**
+   * Returns this Block's type in the Notion ecosystem.
+   */
   getType() { return this.block.value.type }
 }
 
