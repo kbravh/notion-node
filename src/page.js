@@ -1,8 +1,7 @@
 const {subBlocks: {BasicTextBlock, ContainerBlock}, Block} = require('./block')
 const multiclass = require('@kbravh/multi-class')
 
-// ! Determine why multi-class is not pulling Block methods from Container and BasicText
-class Page extends multiclass(Block, BasicTextBlock, ContainerBlock)  {
+class Page extends multiclass(BasicTextBlock, ContainerBlock)  {
   /**
    * Returns the raw data for this entire page and its contents. Useful for rendering pages (for example, with react-notion).
    */
