@@ -26,10 +26,31 @@ const getId = identifier => {
 }
 
 /* Markdown Utils */
+/**
+ * Converts a regular string into the Notion text format.
+ * @param {string} text - the text to be converted to Notion format
+ */
 const plaintextToNotion = text => [[text]]
 
+/**
+ * Returns Notion formatted text in either plaintext format or in Markdown format.
+ * @param {[]} text - the Notion formatted text to be parsed
+ * @param {boolean} markdown - whether or not to return markdown. Defaults to false (plaintext)
+ */
+const parseNotionText = (text, markdown = false) => markdown ?
+notionToMarkdown(text) || null :
+notionToPlaintext(text) || null
+
+/**
+ * Returns Notion formatted text as plaintext.
+ * @param {[]} notionArray - the Notion formatted text to be parsed
+ */
 const notionToPlaintext = notionArray => notionArray.map(([text]) => text).join('')
 
+/**
+ * Returns Notion formatted text as Markdown.
+ * @param {[]} notionArray - the Notion formatted text to be parsed
+ */
 const notionToMarkdown = notionArray => notionArray.map(([text, modifiers]) => {
   let markdown = text
   if (modifiers){
@@ -59,6 +80,7 @@ const notionToMarkdown = notionArray => notionArray.map(([text, modifiers]) => {
 module.exports = {
   getId,
   plaintextToNotion,
+  parseNotionText,
   notionToPlaintext,
   notionToMarkdown
 }
