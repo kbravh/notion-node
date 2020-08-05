@@ -47,6 +47,16 @@ class Notion {
     const parsedIds = ids.map(id => getId(id))
     return this.requestClient.getBlocks(parsedIds)
   }
+
+  /**
+   * Returns a Collection object that represents a Notion collection,
+   * what's also known as a Database.
+   * @param {string} id_or_url - The URL or ID of the Notion block
+   */
+  getCollection(id_or_url) {
+    const parsedId = getId(id_or_url)
+    return this.requestClient.getBlock(parsedId, "collection")
+  }
 }
 
 module.exports = Notion
