@@ -32,10 +32,6 @@ class Block {
 }
 
 class BasicTextBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the text attached to this block.
    * @param {boolean} markdown - determines whether or not the text will be returned as markdown or plaintext. Defaults to false (plaintext).
@@ -48,10 +44,6 @@ class BasicTextBlock extends Block {
 }
 
 class BasicMediaBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the source URL for the media
    */
@@ -74,23 +66,11 @@ class ContainerBlock extends Block{
   getContent(){return this.requestClient.getBlocks(this.block.value?.content)}
 }
 
-class AbstractBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class AbstractBlock extends BasicMediaBlock {}
 
-class AudioBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class AudioBlock extends BasicMediaBlock {}
 
 class BookmarkBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the link in the bookmark.
    */
@@ -117,23 +97,11 @@ class BookmarkBlock extends Block {
   getCover() { return this.block.value?.format?.bookmark_cover }
 }
 
-class BreadcrumbBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class BreadcrumbBlock extends Block {}
 
-class BulletedListBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class BulletedListBlock extends BasicTextBlock {}
 
 class CalloutBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the icon attached to the callout block. If it is a custom icon, it will return a URL. If it is an emoji, it will return it directly.
    */
@@ -141,50 +109,26 @@ class CalloutBlock extends BasicTextBlock {
 }
 
 class CodeBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the language assigned to the code block.
    */
   getLanguage() { return this.block.value?.properties?.language?.[0]?.[0] }
 }
 
-class CodepenBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class CodepenBlock extends BasicMediaBlock {}
 
 class ColumnBlock extends ContainerBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the layout ratio for column. 
    */
   getRatio(){return this.block.value?.format?.column_ratio}
 }
 
-class ColumnListBlock extends ContainerBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class ColumnListBlock extends ContainerBlock {}
 
-class DividerBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class DividerBlock extends Block {}
 
 class DriveBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the link to the Drive file
    */
@@ -211,40 +155,20 @@ class DriveBlock extends Block {
   getDriveProperties() { return this.block.value?.format?.drive_properties }
 }
 
-class EmbedBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class EmbedBlock extends BasicMediaBlock {}
 
-class EquationBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class EquationBlock extends BasicTextBlock {}
 
 class FactoryBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the text command of the template button
    */
   getText() { return this.block.value?.properties?.[0]?.[0] }
 }
 
-class FigmaBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class FigmaBlock extends BasicMediaBlock {}
 
 class FileBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the filename
    */
@@ -261,94 +185,38 @@ class FileBlock extends Block {
   getSource() { return this.block.value?.properties?.source?.[0]?.[0] }
 }
 
-class FramerBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class FramerBlock extends Block {}
 
 class GistBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the link to the gist
    */
   getSource() { return this.block.value?.properties?.source?.[0]?.[0] }
 }
 
-class HeaderBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class HeaderBlock extends BasicTextBlock {}
 
-class ImageBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class ImageBlock extends BasicMediaBlock {}
 
-class InvisionBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class InvisionBlock extends BasicMediaBlock {}
 
-class MiroBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class MiroBlock extends BasicMediaBlock {}
 
-class NumberedListBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class NumberedListBlock extends BasicTextBlock {}
 
-class PDFBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class PDFBlock extends BasicMediaBlock {}
 
-class QuoteBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class QuoteBlock extends BasicTextBlock {}
 
-class SubHeaderBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class SubHeaderBlock extends BasicTextBlock {}
 
-class SubSubHeaderBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class SubSubHeaderBlock extends BasicTextBlock {}
 
-class TOCBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class TOCBlock extends Block {}
 
-class TextBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class TextBlock extends BasicTextBlock {}
 
 class TodoBlock extends BasicTextBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   // /**
   //  * Returns the state of the checkbox. 
   //  * TODO - If true or false is passed, sets the checkbox.
@@ -368,40 +236,20 @@ class TodoBlock extends BasicTextBlock {
   isChecked(checked) { return this.block?.value?.properties?.checked?.[0]?.[0] == "Yes" }
 }
 
-class ToggleBlock extends multiclass(BasicTextBlock, ContainerBlock) {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class ToggleBlock extends multiclass(BasicTextBlock, ContainerBlock) {}
 
 class TweetBlock extends Block {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-
   /**
    * Returns the URL of the tweet
    */
   getSource() { return this.block.value?.properties?.source?.[0]?.[0] }
 }
 
-class TypeformBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class TypeformBlock extends BasicMediaBlock {}
 
-class VideoBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class VideoBlock extends BasicMediaBlock {}
 
-class WhimsicalBlock extends BasicMediaBlock {
-  constructor(requestClient, block) {
-    super(requestClient, block)
-  }
-}
+class WhimsicalBlock extends BasicMediaBlock {}
 
 const subBlocks = {
   AbstractBlock,
