@@ -1,18 +1,35 @@
-const { notionToPlaintext, notionToMarkdown } = require('./util')
+const { parseNotionText } = require('./util')
+const { Block, subBlocks } = require('./block')
+const multiclass = require('@kbravh/multi-class')
 
-class Collection {
-  constructor(requestClient, block){
-    this.requestClient = requestClient
-    this.collection = block
-  }
+class Collection extends Block {
 
-  getRawData(){ return this.collection || null}
-  getID(){ return this.collection.value.id || null}
-  getName(){ return this.collection.value?.name?.[0]?.[0] || null}
-  getDescription(){ return this.collection.value.description && this.collection.value.description[0] && this.collection.value.description[0][0] || null}
-  getIcon(){ return this.collection.value.icon || null}
-  getCover(){ return this.collection.value.cover || null}
-  async getParent(){ return this.requestClient.getBlock(this.collection.value.parent_id, this.collection.value.parent_table)}
+  /**
+   * Returns this Block's type in the Notion ecosystem.
+   */
+  getType() { return "collection" }
+
+  /**
+   * Returns the title of this collection.
+   * @param {boolean} markdown - determines whether or not the text will be returned as markdown or plaintext. Defaults to false (plaintext).
+   */
+  getTitle(markdown = false) { return parseNotionText(this.block.value?.name, markdown) }
+
+  /**
+   * Returns the description of this collection.
+   * @param {boolean} markdown - determines whether or not the text will be returned as markdown or plaintext. Defaults to false (plaintext).
+   */
+  getDescription(markdown = false) { return parseNotionText(this.block.value?.description, markdown) }
+
+  /**
+   * Returns the emoji icon assigned to the page. If a custom icon is assigned, returns a link to it.
+   */
+  getIcon() { return this.collection.value?.icon }
+
+  /**
+   * Returns a link to the cover if it exists.
+   */
+  getCover() { return this.collection.value?.cover }
 }
 
 module.exports = Collection

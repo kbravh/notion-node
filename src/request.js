@@ -74,7 +74,7 @@ class RequestClient {
       id: blockId,
       table: blockType
     })
-    .then(([block]) => this.resultToBlock(block))
+    .then(([block]) => this.resultToBlock(block, blockType))
   }
 
   /**
@@ -95,8 +95,8 @@ class RequestClient {
    * into the corresponding Block object.
    * @param {{}} block - The block result from the getRecordValues functions
    */
-  resultToBlock(block) {
-    switch (block?.value?.type || "block") {
+  resultToBlock(block, blockType = "block") {
+    switch (block?.value?.type || blockType) {
       case "block":
         return new Block(this, block)
       case "abstract":
@@ -117,6 +117,8 @@ class RequestClient {
         return new subBlocks.CodepenBlock(this, block)
       case "collection":
         return new Collection(this, block)
+        case "collection_view_page":
+          return new subBlocks.CollectionViewPageBlock(this, block)
       case "column":
         return new subBlocks.ColumnListBlock(this, block)
       case "column_list":

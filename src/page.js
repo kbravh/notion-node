@@ -19,6 +19,11 @@ class Page extends multiclass(BasicTextBlock, ContainerBlock)  {
   getCover() {return this.block.value?.format?.page_cover}
 
   /**
+   * Returns the cover image position as a decimal number from 0 to 1.
+   */
+  getCoverPosition(){return this.block.value?.format?.page_cover_position}
+
+  /**
    * Returns the emoji icon assigned to the page. If a custom icon is assigned, returns a link to it.
    */
   getIcon() {return this.block.value?.format?.page_icon}

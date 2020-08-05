@@ -1,4 +1,4 @@
-const { notionToPlaintext, notionToMarkdown } = require('./util')
+const { parseNotionText } = require('./util')
 const multiclass = require('@kbravh/multi-class')
 
 class Block {
@@ -36,11 +36,7 @@ class BasicTextBlock extends Block {
    * Returns the text attached to this block.
    * @param {boolean} markdown - determines whether or not the text will be returned as markdown or plaintext. Defaults to false (plaintext).
    */
-  getText(markdown = false) {
-    return markdown ?
-      notionToMarkdown(this.block.value.properties?.title) || null :
-      notionToPlaintext(this.block.value.properties?.title) || null
-  }
+  getText(markdown = false) { return parseNotionText(this.block.value?.properties?.title, markdown) }
 }
 
 class BasicMediaBlock extends Block {
@@ -55,20 +51,20 @@ class BasicMediaBlock extends Block {
   getFormat() { return this.block.value?.format }
 }
 
-class ContainerBlock extends Block{
-  constructor(requestClient, block){
+class ContainerBlock extends Block {
+  constructor(requestClient, block) {
     super(requestClient, block)
   }
 
   /**
    * Returns the set of Blocks that this block contains.
    */
-  getContent(){return this.requestClient.getBlocks(this.block.value?.content)}
+  getContent() { return this.requestClient.getBlocks(this.block.value?.content) }
 }
 
-class AbstractBlock extends BasicMediaBlock {}
+class AbstractBlock extends BasicMediaBlock { }
 
-class AudioBlock extends BasicMediaBlock {}
+class AudioBlock extends BasicMediaBlock { }
 
 class BookmarkBlock extends Block {
   /**
@@ -97,9 +93,9 @@ class BookmarkBlock extends Block {
   getCover() { return this.block.value?.format?.bookmark_cover }
 }
 
-class BreadcrumbBlock extends Block {}
+class BreadcrumbBlock extends Block { }
 
-class BulletedListBlock extends BasicTextBlock {}
+class BulletedListBlock extends BasicTextBlock { }
 
 class CalloutBlock extends BasicTextBlock {
   /**
@@ -115,18 +111,35 @@ class CodeBlock extends BasicTextBlock {
   getLanguage() { return this.block.value?.properties?.language?.[0]?.[0] }
 }
 
-class CodepenBlock extends BasicMediaBlock {}
+class CodepenBlock extends BasicMediaBlock { }
+
+class CollectionViewPageBlock extends Block {
+  /**
+   * Returns the Collection associated with collection view this page.
+   */
+  getCollection() { return this.requestClient.getBlock(this.block.value?.collection_id, 'collection') }
+
+  /**
+   * Returns the cover image position as a decimal number from 0 to 1.
+   */
+  getCoverPosition() { return this.block.value?.format?.page_cover_position }
+
+  /**
+   * Returns the views associated with this collection view page.
+   */
+  getViews() { return this.requestClient.getBlocks(this.block.value?.view_ids, 'block') }
+}
 
 class ColumnBlock extends ContainerBlock {
   /**
    * Returns the layout ratio for column. 
    */
-  getRatio(){return this.block.value?.format?.column_ratio}
+  getRatio() { return this.block.value?.format?.column_ratio }
 }
 
-class ColumnListBlock extends ContainerBlock {}
+class ColumnListBlock extends ContainerBlock { }
 
-class DividerBlock extends Block {}
+class DividerBlock extends Block { }
 
 class DriveBlock extends Block {
   /**
@@ -155,9 +168,9 @@ class DriveBlock extends Block {
   getDriveProperties() { return this.block.value?.format?.drive_properties }
 }
 
-class EmbedBlock extends BasicMediaBlock {}
+class EmbedBlock extends BasicMediaBlock { }
 
-class EquationBlock extends BasicTextBlock {}
+class EquationBlock extends BasicTextBlock { }
 
 class FactoryBlock extends Block {
   /**
@@ -166,7 +179,7 @@ class FactoryBlock extends Block {
   getText() { return this.block.value?.properties?.[0]?.[0] }
 }
 
-class FigmaBlock extends BasicMediaBlock {}
+class FigmaBlock extends BasicMediaBlock { }
 
 class FileBlock extends Block {
   /**
@@ -185,7 +198,7 @@ class FileBlock extends Block {
   getSource() { return this.block.value?.properties?.source?.[0]?.[0] }
 }
 
-class FramerBlock extends Block {}
+class FramerBlock extends Block { }
 
 class GistBlock extends Block {
   /**
@@ -194,27 +207,27 @@ class GistBlock extends Block {
   getSource() { return this.block.value?.properties?.source?.[0]?.[0] }
 }
 
-class HeaderBlock extends BasicTextBlock {}
+class HeaderBlock extends BasicTextBlock { }
 
-class ImageBlock extends BasicMediaBlock {}
+class ImageBlock extends BasicMediaBlock { }
 
-class InvisionBlock extends BasicMediaBlock {}
+class InvisionBlock extends BasicMediaBlock { }
 
-class MiroBlock extends BasicMediaBlock {}
+class MiroBlock extends BasicMediaBlock { }
 
-class NumberedListBlock extends BasicTextBlock {}
+class NumberedListBlock extends BasicTextBlock { }
 
-class PDFBlock extends BasicMediaBlock {}
+class PDFBlock extends BasicMediaBlock { }
 
-class QuoteBlock extends BasicTextBlock {}
+class QuoteBlock extends BasicTextBlock { }
 
-class SubHeaderBlock extends BasicTextBlock {}
+class SubHeaderBlock extends BasicTextBlock { }
 
-class SubSubHeaderBlock extends BasicTextBlock {}
+class SubSubHeaderBlock extends BasicTextBlock { }
 
-class TOCBlock extends Block {}
+class TOCBlock extends Block { }
 
-class TextBlock extends BasicTextBlock {}
+class TextBlock extends BasicTextBlock { }
 
 class TodoBlock extends BasicTextBlock {
   // /**
@@ -236,7 +249,7 @@ class TodoBlock extends BasicTextBlock {
   isChecked(checked) { return this.block?.value?.properties?.checked?.[0]?.[0] == "Yes" }
 }
 
-class ToggleBlock extends multiclass(BasicTextBlock, ContainerBlock) {}
+class ToggleBlock extends multiclass(BasicTextBlock, ContainerBlock) { }
 
 class TweetBlock extends Block {
   /**
@@ -245,11 +258,11 @@ class TweetBlock extends Block {
   getSource() { return this.block.value?.properties?.source?.[0]?.[0] }
 }
 
-class TypeformBlock extends BasicMediaBlock {}
+class TypeformBlock extends BasicMediaBlock { }
 
-class VideoBlock extends BasicMediaBlock {}
+class VideoBlock extends BasicMediaBlock { }
 
-class WhimsicalBlock extends BasicMediaBlock {}
+class WhimsicalBlock extends BasicMediaBlock { }
 
 const subBlocks = {
   AbstractBlock,
@@ -262,6 +275,7 @@ const subBlocks = {
   CalloutBlock,
   CodeBlock,
   CodepenBlock,
+  CollectionViewPageBlock,
   ColumnBlock,
   ColumnListBlock,
   ContainerBlock,
