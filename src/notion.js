@@ -1,5 +1,5 @@
 const RequestClient = require('./request')
-const {getId} = require('./util')
+const { getId } = require('./util')
 
 class Notion {
   constructor(token) {
@@ -20,18 +20,15 @@ class Notion {
    * with all of its contents.
    * @param {string} id - The URL or ID of the Notion page
    */
-  getPage(id) { 
-    const parsedId = getId(id)
-    return this.requestClient.getPage(parsedId)
-  }
+  getPage(id) { return this.getBlock(id) }
 
   /**
    * Returns a Block object or one of its sub-blocks that represents
    * a single Notion block.
-   * @param {string} id_or_url - The URL of ID of the Notion block
+   * @param {string} id_or_url - The URL or ID of the Notion block
    */
   getBlock(id_or_url) {
-    if (typeof id_or_url !== "string"){
+    if (typeof id_or_url !== "string") {
       throw `The ID or URL must be a string`
     }
     const parsedId = getId(id_or_url)
@@ -44,7 +41,7 @@ class Notion {
    * @param {[string]} ids - An array of Notion block IDs or URLs
    */
   getBlocks(ids) {
-    if(!Array.isArray(ids)){
+    if (!Array.isArray(ids)) {
       throw `You must pass in an array of IDs or URLs`
     }
     const parsedIds = ids.map(id => getId(id))

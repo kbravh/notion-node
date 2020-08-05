@@ -1,4 +1,5 @@
 const { notionToPlaintext, notionToMarkdown } = require('./util')
+const multiclass = require('@kbravh/multi-class')
 
 class Block {
   constructor(requestClient, block) {
@@ -8,6 +9,7 @@ class Block {
 
   /**
    * Returns the raw Notion data that makes up this Block.
+   * 
    */
   getData() { return this.block }
 
@@ -20,6 +22,13 @@ class Block {
    * Returns this Block's type in the Notion ecosystem.
    */
   getType() { return this.block.value.type }
+
+  /**
+   * Will return the parent item, which will be the corresponding item type.
+   */
+  async getParent() {
+    return this.requestClient.getBlock(this.block.value?.parent_id, this.block.value?.parent_table)
+  }
 }
 
 class BasicTextBlock extends Block {
@@ -29,7 +38,7 @@ class BasicTextBlock extends Block {
 
   /**
    * Returns the text attached to this block.
-   * @param {boolean} markdown - determines whether or not the text will be returned as markdown or plaintext. Defaults to false.
+   * @param {boolean} markdown - determines whether or not the text will be returned as markdown or plaintext. Defaults to false (plaintext).
    */
   getText(markdown = false) {
     return markdown ?
@@ -359,15 +368,10 @@ class TodoBlock extends BasicTextBlock {
   isChecked(checked) { return this.block?.value?.properties?.checked?.[0]?.[0] == "Yes" }
 }
 
-class ToggleBlock extends BasicTextBlock {
+class ToggleBlock extends multiclass(BasicTextBlock, ContainerBlock) {
   constructor(requestClient, block) {
     super(requestClient, block)
   }
-
-  /**
-   * Returns the set of Blocks that this block contains.
-   */
-  getContents(){return this.requestClient.getBlocks(this.block.value?.content)}
 }
 
 class TweetBlock extends Block {
@@ -402,6 +406,8 @@ class WhimsicalBlock extends BasicMediaBlock {
 const subBlocks = {
   AbstractBlock,
   AudioBlock,
+  BasicMediaBlock,
+  BasicTextBlock,
   BookmarkBlock,
   BreadcrumbBlock,
   BulletedListBlock,
@@ -410,6 +416,7 @@ const subBlocks = {
   CodepenBlock,
   ColumnBlock,
   ColumnListBlock,
+  ContainerBlock,
   DividerBlock,
   DriveBlock,
   EmbedBlock,

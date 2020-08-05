@@ -453,6 +453,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@kbravh/multi-class@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@kbravh/multi-class/-/multi-class-1.0.3.tgz#36a6c820947e66b28e9cfb3be7ec2f4a57eee720"
+  integrity sha512-7sgsj5GE4d8SDPMtcrC6LIzdIgE95wUYZJFvOWFOHuSEnJ0n+NBsbdk1j2wIjznfbT5LAeSeEMXNS3j6U89szw==
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.1.tgz#e7df00f98a203324f6dc7cc606cad9d4a8ab2217"

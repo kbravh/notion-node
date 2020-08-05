@@ -86,7 +86,8 @@ class RequestClient {
       id,
       table: `block`
     }))
-    return this.getRecordValues(requestedRecords).then(results => results.map(block => this.resultToBlock(block)))
+    return this.getRecordValues(requestedRecords)
+    .then(results => results.map(block => this.resultToBlock(block)))
   }
 
   /**
@@ -144,6 +145,8 @@ class RequestClient {
         return new subBlocks.MiroBlock(this, block)
       case "numbered_list":
         return new subBlocks.NumberedListBlock(this, block)
+      case "page":
+        return new Page(this, block)
       case "pdf":
         return new subBlocks.PDFBlock(this, block)
       case "sub_header":
@@ -169,6 +172,7 @@ class RequestClient {
       case "whimsical":
         return new subBlocks.WhimsicalBlock(this, block)
       default:
+        console.log(JSON.stringify(block, null, 2))
         return null
     }
   }
@@ -178,14 +182,13 @@ class RequestClient {
    * @param {string} pageId - The ID or URL of the page to fetch.
    * @returns {Page or null}
    */
-  async getPage(pageId) {
+  async getFullPageData(pageId) {
     return await this.authorizedRequest(`/loadPageChunk`, {
       ...defaultOptions,
       pageId,
     })
       .then(response => response.recordMap)
       .then(recordMap => recordMap.block)
-      .then(data => data ? new Page(this, data) : null)
   }
 }
 
