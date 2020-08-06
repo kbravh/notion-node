@@ -1,6 +1,5 @@
 const { parseNotionText } = require('./util')
-const { Block, subBlocks } = require('./block')
-const multiclass = require('@kbravh/multi-class')
+const { Block } = require('./block')
 
 class Collection extends Block {
 
