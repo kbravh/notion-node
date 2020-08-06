@@ -1,12 +1,12 @@
 {
-  "name": "notion.js",
-  "version": "1.0.0",
-  "description": "An unofficial JavaScript API wrapper for Notion.",
+  "name": "notion-node",
+  "version": "0.1.1",
+  "description": "An unofficial Node.js API wrapper for Notion.",
   "main": "index.js",
-  "repository": "https://github.com/kbravh/notion.js.git",
+  "repository": "https://github.com/kbravh/notion-node.git",
   "author": "Karey Higuera <karey.higuera@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "test": "jest"
   },
