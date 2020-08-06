@@ -34,7 +34,7 @@ const getPage = async () => {
 getPage()
 ```
 
-If you want to query data from your private pages, you'll need to provide your Notion `token_v2` cookie to the client. Simply log into Notion in the browser, open your cookies, and copy the value from the `token_v2` field under the `https://www.notion.so` cookies.
+If you want to query data from your private pages, you'll need to provide your Notion `token_v2` cookie to the client. This can be stored in the `NOTION_TOKEN` environment variable on your machine, or passed into the application. To get your token, simply log into Notion in the browser, open your cookies, and copy the value from the `token_v2` field under the `https://www.notion.so` cookies.
 
 ```js
 const notion = new Notion("<notion-token>") 
